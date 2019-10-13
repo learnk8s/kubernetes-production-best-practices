@@ -11,7 +11,7 @@ Each container can have an optional liveness and/or readiness probe.
 
 **References**
 
-- [Kubernetes documentation — container probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
+- [Kubernetes documentation — Container probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
 
 **Example**
 
@@ -28,7 +28,7 @@ Network policies govern the communication between the pods in a namespace or clu
 
 **References**
 
-- [Kubernetes documentation — network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+- [Kubernetes documentation — Network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
 
 **Example**
 
