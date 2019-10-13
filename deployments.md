@@ -1,7 +1,7 @@
 # Defining Kubernetes deployments
 
 <details>
-<summary><b>1. Liveness and readiness probes</b></summary>
+<summary><b>1. Set liveness and readiness probes</b></summary>
 
 **What?**
 
@@ -18,7 +18,7 @@ Each container can have an optional liveness and/or readiness probe.
 </details>
 
 <details>
-<summary><b>2. Network policies</b></summary>
+<summary><b>2. Define network policies</b></summary>
 
 **What?**
 
