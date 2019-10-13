@@ -1,7 +1,7 @@
 # Defining Kubernetes deployments
 
 <details>
-<summary>**Liveness and readiness probes**</summary>
+<summary><b>Liveness and readiness probes</b></summary>
 
 | | Description |
 | --- | --- |
