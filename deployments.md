@@ -13,6 +13,8 @@ Each container can have an optional liveness and/or readiness probe.
 
 - [Kubernetes documentation — container probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)
 
+**Example**
+
 </details>
 
 <details>
