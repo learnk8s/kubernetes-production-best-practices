@@ -1,7 +1,7 @@
 # Defining Kubernetes deployments
 
 <details>
-<summary><b>Liveness and readiness probes</b></summary>
+<summary><b>1. Liveness and readiness probes</b></summary>
 
 **What?**
 
@@ -16,7 +16,7 @@ Each container can have an optional liveness and/or readiness probe.
 </details>
 
 <details>
-<summary><b>Network policies</b></summary>
+<summary><b>2. Network policies</b></summary>
 
 **What?**
 
@@ -27,5 +27,7 @@ Network policies govern the communication between the pods in a namespace or clu
 **References**
 
 - [Kubernetes documentation — network policies](https://kubernetes.io/docs/concepts/services-networking/network-policies/)
+
+**Example**
 
 </details>
