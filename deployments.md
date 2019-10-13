@@ -11,7 +11,7 @@
 </details>
 
 <details>
-<summary><h3>Liveness and readiness probes</h3></summary>
+<summary><font size="7">Liveness and readiness probes</font></summary>
 
 ### Description
 ### Reason
