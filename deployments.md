@@ -1,20 +1,8 @@
 # Defining Kubernetes deployments
 
-- [ ] Network policies
 <details>
-<summary>Details</summary>
-
-### Description
-### Reason
-### Reference
-### Example
-</details>
-
-<details>
-<summary><big>Liveness and readiness probes</big></summary>
-
-### Description
-### Reason
-### Reference
-### Example
+<summary>**Liveness and readiness probes**</summary>
+| Command | Description |
+| `git status` | List all *new or modified* files |
+| `git diff` | Show file differences that **haven't been** staged |
 </details>
