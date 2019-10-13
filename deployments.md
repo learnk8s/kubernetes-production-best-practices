@@ -2,8 +2,12 @@
 
 <details>
 <summary>**Liveness and readiness probes**</summary>
-| Command | Description |
+
+| | Description |
 | --- | --- |
-| `git status` | List all *new or modified* files |
-| `git diff` | Show file differences that **haven't been** staged |
+| What? | Each container of a Pod can have a liveness and readiness probe. |
+| Why? | |
+| Refs | <ul><li>[Container probes](https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes)</li></ul> |
+| Example | |
+
 </details>
