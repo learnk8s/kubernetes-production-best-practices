@@ -72,7 +72,7 @@ The readiness probe doesn't include dependencies to services such as:
 - APIs
 - third party services
 
-You can [explore what happens when there're dependencies in the readiness probes in this eassy](https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-how-to-avoid-shooting-yourself-in-the-foot/#shootingyourselfinthefootwithreadinessprobes).
+You can [explore what happens when there're dependencies in the readiness probes in this essay](https://blog.colinbreck.com/kubernetes-liveness-and-readiness-probes-how-to-avoid-shooting-yourself-in-the-foot/#shootingyourselfinthefootwithreadinessprobes).
 
 ### The app retries connecting to dependent services
 
@@ -108,7 +108,7 @@ You can [test that your app gracefully shuts down with this tool: kube-sigterm-t
 
 ### The app doesn't shut down on SIGTERM, but it gracefully terminates connections
 
-It might take some time before component such as kube-proxy or the Ingress controller is notified of the endpoint changes.
+It might take some time before a component such as kube-proxy or the Ingress controller is notified of the endpoint changes.
 
 Hence, traffic might still flow to the Pod despite it being marked as terminated.
 
@@ -116,9 +116,9 @@ The app should stop accepting new requests on all remaining connections, and clo
 
 If you need a refresher on how endpoints are propagated in your cluster, [read this article on how to handle client requests properly](https://freecontent.manning.com/handling-client-requests-properly-with-kubernetes/).
 
-### The app still process incoming requests in the grace period
+### The app still processes incoming requests in the grace period
 
-You might want to consider using the container lifecycle events such as [the preStop handler](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/#define-poststart-and-prestop-handlers) to customise what happened before a Pod is deleted.
+You might want to consider using the container lifecycle events such as [the preStop handler](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/#define-poststart-and-prestop-handlers) to customize what happened before a Pod is deleted.
 
 ### The CMD in the `Dockerfile` forwards the SIGTERM to the process
 
@@ -483,7 +483,7 @@ The [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cl
 
 The Cluster Autoscaler can automatically add or remove worker nodes from your cluster. It becomes active when a Pod can't be scheduled to one of the existing nodes because of inefficient resources. In that case, the Cluster Autoscaler will create a new worker node, so that the Pod can be scheduled.
 
-Configuring the Cluster Autoscaler includes some overhead, and another downside is that it only becomes active when a Pod already failed to schedule. Given that it takes some time to spin up a new worker node, this can result in a considerable delay until the Pods can finally run.
+Configuring the Cluster Autoscaler includes some overhead, and another downside is that it only becomes active when a Pod has already failed to schedule. Given that it takes some time to spin up a new worker node, this can result in a considerable delay until the Pods can finally run.
 
 In most cases, it's sufficient to choose a cluster size manually and scale up or down manually when it's needed. However, for scenarios with extremely variable amounts of workloads, using the Cluster Autoscaler can make sense.
 
