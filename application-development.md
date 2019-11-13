@@ -453,7 +453,7 @@ You could save on running an extra container for each Pod in your cluster.
 
 ### The app is stateless
 
-A containerised app is stateless if it doesn't store any state in the local filesystem of its container.
+A containerised app is stateless if it **does not** store any information about previous requests. That is to say no information will be stored on the local filesystem nor in memory within its container, and every run will be fresh and uninformed from prior decisions. 
 
 For an app to be horizontally scalable, it must be stateless. The reason is that if each container stores its own state, there is no "ground truth" and the states saved by each container may diverge. This results in inconsistent behaviour (for example, a certain piece of data is available in one Pod, but not in another).
 
