@@ -1,7 +1,11 @@
-# Kubernetes checklists
+# Kubernetes production best-practices
 
-A collection of checklists with best-practices for production-ready Kubernetes.
+This checklist provides actionable best practices for deploying secure, scalable, and resilient services on Kubernetes.
 
-## Checklists
+![Kubernetes production best practices](preview.gif)
 
-- [Defining Kubernetes deployments](deployments.md)
+**Topics**
+
+- [Application development](application-development.md)
+- [Governance](application-development.md)
+- [Cluster configuration](configuration.md)
