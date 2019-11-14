@@ -451,13 +451,15 @@ You could save on running an extra container for each Pod in your cluster.
 
 ## Scaling
 
-### The app is stateless
+### Containers do not store any state in their local filesystem
 
-A containerised app is stateless if it doesn't store any state in the local filesystem of its container.
+Containers have their own local filesystem and you might be tempted to use it for persisting data.
 
-For an app to be horizontally scalable, it must be stateless. The reason is that if each container stores its own state, there is no "ground truth" and the states saved by each container may diverge. This results in inconsistent behaviour (for example, a certain piece of data is available in one Pod, but not in another).
+However, storing persistent data in a container's local filesystem prevents the encompassing Pod from being scaled horizontally (that is, by adding or removing replicas of the Pod).
 
-To make an app stateless, all state must be saved at a central place that is independent of the running containers, for example, in a data store outside the cluster.
+This is because, by using the local filesystem, each container maintains its own "state", which means that the states of Pod replicas may diverge over time. This results in inconsistent behaviour from the user's point of view (for example, a certain piece of user information is available when the request hits one Pod, but not when the request hits another Pod).
+
+Instead, any persistent information should be saved at a central place outside the Pods. For example, in a PersistentVolume in the cluster, or even better in some storage service outside the cluster.
 
 ### Use the Horizontal Pod Autoscaler for apps with variable usage patterns
 
