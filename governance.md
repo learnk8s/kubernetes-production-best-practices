@@ -12,7 +12,7 @@ Cluster administrators can set constraints to limit the number of objects or amo
 
 You should check out the official documentation if you need a refresher on [limit ranges](https://kubernetes.io/docs/concepts/policy/limit-range/)
 
-### Namespaces have LimitRage
+### Namespaces have LimitRange
 
 Containers without limits can lead to resource contention with other containers and unoptimized consumption of computing resources.
 
