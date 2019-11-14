@@ -43,6 +43,15 @@ This causes all Pods to be restarted, whih ensures that the new configuration is
 
 You can automate this process with a CD system.
 
+### Mount Secrets as volumes, not environment variables
+
+TODO: integrate with existing "Mount Secrets as volumes, not environment variables".
+
+- Injected environment variables are always present and may become artifacts in logs for the entire system.
+- Secret-based environment variables should be mounted as a volume (not environment variables). In this way, they're only available to the desired process/container. Not the whole pod.
+
+See #5
+
 
 * * *
 
