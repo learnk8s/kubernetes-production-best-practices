@@ -47,15 +47,25 @@ The Liveness probe is designed to restart your container when it's stuck.
 
 Consider the following scenario: if your application is processing an infinite loop, there's no way to exit or ask for help.
 
-When the process is consuming 100% CPU, it won't have time to reply to the Readiness probe checks, and it will be eventually removed from the Service.
+When the process is consuming 100% CPU, it won't have time to reply to the (other) Readiness probe checks, and it will be eventually removed from the Service.
 
-However, the Pod is actively counted against the active replicas for the current Deployment.
+However, the Pod is still registered as an active replica for the current Deployment.
 
-In other words, not only the process isn't serving requests, but also it consumes resources.
+If you don't have a Liveness probe, it stays _Running_ but detached from the Service.
 
-You should expose and use a Liveness probe for the current container that replies with a success response.
+In other words, not only the process isn't serving any requests, but also it consumes resources.
 
-The probe should not have any logic, and it should be used as a recovery mechanism in case the process is not responsive.
+_What should you do?_
+
+1. Expose an endpoint from your app
+1. The endpoint always replies with a success response
+1. Consume the endpoint from the Liveness probe
+
+Please note that you should not use the Liveness probe to handle fatal errors in your app and request Kubernetes to restart the app.
+
+Instead, you should let the app crash.
+
+The Liveness probe should be used as a recovery mechanism only in case the process is not responsive.
 
 ### Liveness probes values aren't the same as the Readiness
 
