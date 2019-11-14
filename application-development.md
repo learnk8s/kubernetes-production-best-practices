@@ -453,11 +453,11 @@ You could save on running an extra container for each Pod in your cluster.
 
 ### Containers do not store any state in their local filesystem
 
-Containers have their own local filesystem and you might be tempted to use it for persisting data.
+Containers have a local filesystem and you might be tempted to use it for persisting data.
 
 However, storing persistent data in a container's local filesystem prevents the encompassing Pod from being scaled horizontally (that is, by adding or removing replicas of the Pod).
 
-This is because, by using the local filesystem, each container maintains its own "state", which means that the states of Pod replicas may diverge over time. This results in inconsistent behaviour from the user's point of view (for example, a certain piece of user information is available when the request hits one Pod, but not when the request hits another Pod).
+This is because, by using the local filesystem, each container maintains its own "state", which means that the states of Pod replicas may diverge over time. This results in inconsistent behaviour from the user's point of view (for example, a specific piece of user information is available when the request hits one Pod, but not when the request hits another Pod).
 
 Instead, any persistent information should be saved at a central place outside the Pods. For example, in a PersistentVolume in the cluster, or even better in some storage service outside the cluster.
 
@@ -469,25 +469,31 @@ Configuring the HPA allows your app to stay available and responsive under any t
 
 To configure the HPA to autoscale your app, you have to create a [HorizontalPodAutoscaler](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.16/#horizontalpodautoscaler-v1-autoscaling) resource, which defines what metric to monitor for your app.
 
-The HPA can monitor either built-in resource metric (CPU and memory usage of your Pods) or custom metrics. In the case of custom metrics, you are also responsible to collect and expose these metrics, which you can do, for example, with [Prometheus](https://prometheus.io/) and the [Prometheus Adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter).
+The HPA can monitor either built-in resource metric (CPU and memory usage of your Pods) or custom metrics. In the case of custom metrics, you are also responsible for collecting and exposing these metrics, which you can do, for example, with [Prometheus](https://prometheus.io/) and the [Prometheus Adapter](https://github.com/DirectXMan12/k8s-prometheus-adapter).
 
-### Don't use the Vertical Pod Autoscaler
+### Don't use the Vertical Pod Autoscaler while it's still in beta 
 
 Analogous to the [Horizontal Pod Autoscaler (HPA)](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/), there exists the [Vertical Pod Autoscaler (VPA)](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler).
 
-The VPA can automatically adapt the resource requests and limits of your Pods, so that when a Pod needs more resources, it can get them. This can be useful for applications that can't be scaled horizontally (by adding or removing replicas).
+The VPA can automatically adapt the resource requests and limits of your Pods so that when a Pod needs more resources, it can get them (increasing/decreasing the resources of a single Pod is called _vertical scaling_, as opposed to _horizontal scaling_, which means increasing/decreasing the number of replicas of a Pod).
 
-The VPA is currently in beta and is **not recommended for production**. Given that, and that most applications deployed to Kubernetes actually can be scaled horizontally, it is best to not use the VPA at the moment.
+This can be useful for scaling applications that can't be scaled horizontally.
 
-### Don't use the Cluster Autoscaler unless you have extremely variable workloads
+However, the VPA is curently in beta and it has [some known limitations](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler#limitations-of-beta-version) (for example, scaling a Pod by changing its resource requirements, requires the Pod to be killed and restarted).
+
+Given these limitations, and the fact that most applications on Kubernetes can be scaled horizontally anyway, it is recommended to not use the VPA in production (at least until there is a stable version).
+
+### Use the Cluster Autoscaler if you have highly varying workloads
 
 The [Cluster Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/cluster-autoscaler) is another type of "autoscaler" (besides the [Horizontal Pod Autoscaler](https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/) and [Vertical Pod Autoscaler](https://github.com/kubernetes/autoscaler/tree/master/vertical-pod-autoscaler)).
 
-The Cluster Autoscaler can automatically add or remove worker nodes from your cluster. It becomes active when a Pod can't be scheduled to one of the existing nodes because of insufficient resources. In that case, the Cluster Autoscaler will create a new worker node, so that the Pod can be scheduled.
+The Cluster Autoscaler can automatically scale the size of your cluster by adding or removing worker nodes.
 
-Configuring the Cluster Autoscaler includes some overhead, and another downside is that it only becomes active when a Pod has already failed to schedule. Given that it takes some time to spin up a new worker node, this can result in a considerable delay until the Pods can finally run.
+A scale-up operation happens when a Pod fails to be scheduled because of insufficient resources on the existing worker nodes. In this case, the Cluster Autoscaler creates a new worker node, so that the Pod can be scheduled. Similarly, when the utilisation of the existing worker nodes is low, the Cluster Autoscaler can scale down by evicting all the workloads from one of the worker nodes and removing it.
 
-In most cases, it's sufficient to choose a cluster size manually and scale up or down manually when it's needed. However, for scenarios with extremely variable amounts of workloads, using the Cluster Autoscaler can make sense.
+Using the Cluster Autoscaler makes sense for highly variable workloads, for example, when the number of Pods may multiply in a short time, and then go back to the previous value. In such scenarios, the Cluster Autoscaler allows you to meet the demand spikes without wasting resources by overprovisioning worker nodes.
+
+However, if your workloads do not vary so much, it may not be worth to set up the Cluster Autoscaler, as it may never be triggered. If your workloads grow slowly and monotonically, it may be enough to monitor the utilisations of your existing worker nodes and add an additional worker node manually when they reach a critical value.
 
 ## Configuration and secrets
 
