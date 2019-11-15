@@ -231,3 +231,15 @@ This is an alternative to listening for the SIGTERM signal.
 ### Container implements postStart lifecycle hook to do any start-up tasks
 
 ### Only use the exec method for the postStart lifecycle hook
+
+* * *
+
+## Amazon Web Services (AWS)
+
+### Use kube2iam to integrate Kubernetes permissions with AWS IAM
+
+As a best practice to use this, I would recommend using [kube2iam](https://github.com/jtblin/kube2iam) -- this allows you to control which IAM roles a pod is allowed to assume based on namespace, but also allows the pod to see itself as having the role vs requiring it to assume such a role.
+
+In our setup we use kube2iam and assign nodes their IAM role - this IAM role is allowed to assume other roles. With kube2iam, we assign the role through a pod annotation, so the pod sees itself as having that role. Additionally we use namespace restrictions to control access to which roles a pod is allowed to assume.
+
+See #7.
