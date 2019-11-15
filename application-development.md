@@ -467,7 +467,7 @@ Active logging is considered an antipattern, and it should be avoided.
 
 ### Avoid sidecars for logging (if you can)
 
-If you wish to apply log transformations to an application with a non-standard log event model, you may want to use a sidecar container.
+If you wish to [apply log transformations to an application with a non-standard log event model](https://rclayton.silvrback.com/container-services-logging-with-docker#effective-logging-infrastructure), you may want to use a sidecar container.
 
 With a sidecar container, you can normalise the log entries before they are shipped elsewhere.
 

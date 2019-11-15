@@ -121,9 +121,8 @@ What you should collect:
 
 Applications should log to stdout rather than to files.
 
-A daemon on each node can collect the logs from the container runtime (if logging to files, a sidecar container for each pod might be necessary).
+[A daemon on each node can collect the logs from the container runtime](https://rclayton.silvrback.com/container-services-logging-with-docker#effective-logging-infrastructure) (if logging to files, a sidecar container for each pod might be necessary).
 
 ### Provision a log aggregation tool
 
-Some log aggregation tools: EFK stack (Elasticsearch, Fluentd, Kibana), DataDog, Sumo Logic, Sysdig, GCP Stackdriver, Azure Monitor, AWS CloudWatch
-Use a hosted logging solution (e.g. DataDog, Stackdriver) rather than a self-hosted one (e.g. EFK stack)
+Use a log aggregation tool such as EFK stack (Elasticsearch, Fluentd, Kibana), DataDog, Sumo Logic, Sysdig, GCP Stackdriver, Azure Monitor, AWS CloudWatch.
