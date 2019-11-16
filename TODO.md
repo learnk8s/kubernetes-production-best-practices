@@ -45,6 +45,30 @@ TODO: integrate with current "Set pod disruption budgets" in "Fault tolerance" (
 
 ### All services that don't need to be accessed from outside the cluster should be ClusterIP
 
+### Secure Ingress endpoints with TLS
+
+* * *
+
+## User management
+
+### Use an external identity system for user management
+
+For example, Azure Active Directory, AWS IAM.
+
+Authentication with bearer token and API server validates token with the external service
+
+* * *
+
+## Additional services
+
+### Run your own container registry
+
+TODO: is this a best practice?
+
+### If you use Helm, run your own Helm chart registry
+
+Chartmuseum, Artifactory
+
 * * *
 
 ## Pod networking
@@ -273,7 +297,7 @@ This is to prevent that the secret values appear in the command that was used to
 - Injected environment variables are always present and may become artifacts in logs for the entire system.
 - Secret-based environment variables should be mounted as a volume (not environment variables). In this way, they're only available to the desired process/container. Not the whole pod.
 
-See #5
+See [tweet](https://twitter.com/jeyfelbrandauer/status/1194752211366088704)
 
 ### Use PodPresets to automatically mount ConfigMaps or Secrets into containers
 
