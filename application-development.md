@@ -370,6 +370,8 @@ spec:
 
 Those labels are [recommended by the official documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/).
 
+> Please not that you're recommended to tag **all resources**.
+
 ### Resources have business labels defined
 
 You could tag your Pods with:
@@ -410,6 +412,8 @@ You can explore labels and [tagging for resources on the AWS tagging strategy pa
 
 The article isn't specific to Kubernetes but explores some of the most common strategies for tagging resources.
 
+> Please not that you're recommended to tag **all resources**.
+
 ### Resources have security labels defined
 
 You could tag your Pods with:
@@ -446,6 +450,8 @@ spec:
 You can explore label and [tagging for resources on the AWS tagging strategy page](https://aws.amazon.com/answers/account-management/aws-tagging-strategies/).
 
 The article isn't specific to Kubernetes but explores some of the most common strategies for tagging resources.
+
+> Please not that you're recommended to tag **all resources**.
 
 ## Logging
 
