@@ -73,7 +73,7 @@ When Liveness and Readiness probes are pointing to the same endpoint, the effect
 
 When the app signals that it's not ready or live, the kubelet detaches the container from the Service and delete it **at the same time**.
 
-You might notice dropping connections because the container there isn't enough time to drain the current connections or process the incoming ones.
+You might notice dropping connections because the container does not have enough time to drain the current connections or process the incoming ones.
 
 You can dig deeper in the following [article that discussed graceful shutdown](https://freecontent.manning.com/handling-client-requests-properly-with-kubernetes/).
 
