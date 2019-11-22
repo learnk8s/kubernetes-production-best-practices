@@ -53,7 +53,7 @@ However, the Pod is still registered as an active replica for the current Deploy
 
 If you don't have a Liveness probe, it stays _Running_ but detached from the Service.
 
-In other words, not only the process isn't serving any requests, but also it consumes resources.
+In other words, not only is the process not serving any requests, but it is also consuming resources.
 
 _What should you do?_
 
