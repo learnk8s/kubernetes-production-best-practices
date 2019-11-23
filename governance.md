@@ -16,7 +16,7 @@ You should check out the official documentation if you need a refresher on [limi
 
 Containers without limits can lead to resource contention with other containers and unoptimized consumption of computing resources.
 
-Kubernetes has two feature to constraining resource utilisation: ResourceQuota and LimitRange.
+Kubernetes has two features for constraining resource utilisation: ResourceQuota and LimitRange.
 
 With the LimitRange object, you can define default values for resource requests and limits for individual containers inside namespaces.
 
@@ -26,7 +26,7 @@ You should check out the official documentation if you need a refresher on [reso
 
 ### Namespaces have ResourceQuotas
 
-with ResourceQuotas, you can limit the total resource consumption of all containers inside a Namespace.
+With ResourceQuotas, you can limit the total resource consumption of all containers inside a Namespace.
 
 Defining a resource quota for a namespace limits the total amount of CPU, memory or storage resources that can be consumed by all containers belonging to that namespace.
 
@@ -71,7 +71,7 @@ You can [learn more about security contexts and privileges containers from this 
 
 Running a read-only file system in your containers forces your containers to be immutable.
 
-Not only this mitigates some old (and risky) practices such as hot patching but also helps you prevent the risks of malicious processes storing or manipulating data inside a container.
+Not only does this mitigate some old (and risky) practices such as hot patching, but also helps you prevent the risks of malicious processes storing or manipulating data inside a container.
 
 Running containers with a read-only file system might sound straightforward, but it might come with some complexity.
 
