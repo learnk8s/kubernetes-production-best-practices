@@ -7,5 +7,5 @@ This checklist provides actionable best practices for deploying secure, scalable
 **Topics**
 
 - [Application development](application-development.md)
-- [Governance](application-development.md)
+- [Governance](governance.md)
 - [Cluster configuration](configuration.md)
