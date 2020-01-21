@@ -258,7 +258,7 @@ Since CPU is a compressible resource, if your container goes over the limit, the
 
 Even if it could have used some of the CPU that was available at that moment.
 
-**[CPU limits are hard.](https://www.reddit.com/r/kubernetes/comments/cmp7jj/multithreading_in_a_container_with_limited/ew52fcj/)**s
+**[CPU limits are hard.](https://www.reddit.com/r/kubernetes/comments/cmp7jj/multithreading_in_a_container_with_limited/ew52fcj/)**
 
 If you wish to dig deeper into CPU and memory limits you should check out the following articles:
 
