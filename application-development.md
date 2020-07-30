@@ -196,7 +196,7 @@ Never run a single Pod individually.
 
 Instead consider deploying your Pod as part of a Deployment, DaemonSet, ReplicaSet or StatefulSet.
 
-[Running more than one instance your of your Pods guarantees that deleting a single Pod won't cause downtime](https://cloudmark.github.io/Node-Management-In-GKE/#replicas).
+[Running more than one instance of your Pods guarantees that deleting a single Pod won't cause downtime](https://cloudmark.github.io/Node-Management-In-GKE/#replicas).
 
 ### Avoid Pods being placed into a single node
 
@@ -370,7 +370,7 @@ spec:
 
 Those labels are [recommended by the official documentation](https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/).
 
-> Please not that you're recommended to tag **all resources**.
+> Please note that you're recommended to tag **all resources**.
 
 ### Resources have business labels defined
 
