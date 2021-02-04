@@ -270,7 +270,7 @@ _Develop higher-level abstractions in order to provide more developer-friendly p
 _Mounting directories from the host into containers._
 
 - Use `emptyDir` for sharing data between containers in the same pod
-- Use `hostPath` if the data needs to be accessed also by agents running on the node 
+- Use `hostPath` if the data needs to be accessed also by agents running on the node
 
 ### Storage managed by Kubernetes
 
@@ -303,15 +303,13 @@ Best practices:
 - Define the least amount of requests to be sent to an admission webhook (avoid `resources: [*]`, etc.)
 - Always use the `namespaceSelector` field in MutatingWebhookConfiguration/ValidatingWebhookConfiguration, which causes the admission control webhook to be only applied in certain namespaces. Select the least amount of namespaces that are necessary.
 - Always exclude the `kube-system` namespace from the scope of an admisson control webhook by the means of the `namespaceSelector` field
-- Don't give anyone RBAC rules to create MutatingWebhookConfiguration/ValidatingWebhookConfiguration unless it's really needed 
+- Don't give anyone RBAC rules to create MutatingWebhookConfiguration/ValidatingWebhookConfiguration unless it's really needed
 - Don't send Secret resources to an admission control webhook if it's not needed (scope the requests that are passed to the webhook to the bare minimum)
 
 ### Authorization
 
 - Only use the default RBAC mode (there's also ABAC and webhook, but don't use them)
 - For RBAC best practices, see Chapter 4
-
-* * *
 
 ## Table of contents
 
