@@ -146,7 +146,7 @@ If you need a refresher on how endpoints are propagated in your cluster, [read t
 
 ### The app still processes incoming requests in the grace period
 
-You might want to consider using the container lifecycle events such as [the preStop handler](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/#define-poststart-and-prestop-handlers) to customize what happened before a Pod is deleted.
+You might want to consider using the container lifecycle events such as [the preStop handler](https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/#define-poststart-and-prestop-handlers) to customize what happens before a Pod is deleted.
 
 ### The CMD in the `Dockerfile` forwards the SIGTERM to the process
 
