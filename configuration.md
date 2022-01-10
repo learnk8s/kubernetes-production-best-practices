@@ -39,7 +39,7 @@ Example output:
 
 > Please note that it is not possible to inspect the master nodes of managed clusters such as GKE, EKS and AKS, using `kube-bench`. The master nodes are controlled and managed by the cloud provider.
 
-### Disable metadata cloud providers metada API
+### Disable metadata cloud providers metadata API
 
 Cloud platforms (AWS, Azure, GCE, etc.) often expose metadata services locally to instances.
 
