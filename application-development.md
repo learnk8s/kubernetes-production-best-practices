@@ -546,3 +546,148 @@ Save only non-sensitive configuration in ConfigMaps. For sensitive information (
 The content of Secret resources should be mounted into containers as volumes rather than passed in as environment variables.
 
 This is to prevent that the secret values appear in the command that was used to start the container, which may be inspected by individuals that shouldn't have access to the secret values.
+
+## Stateful applications
+
+The hardest part in running stateful applications such as databases and message brokers on Kubernetes is to understand that Kubernetes is not aware of the deployment details and a naive Deployment could lead to complete data loss.
+
+Consider the following example: you have a three-node PostgreSQL with a primary and two secondaries.
+
+You set up streaming replication, and all the writes go to the master, and they are asynchronously replicated to the secondaries.
+
+If the current master is made unavailable (goes down) and the asynchronous replication has a lag, all the writes are only recorded in the primary.
+
+There isn't enough time to stream those to the replicas.
+
+A naive failover leader election algorithm could promote the secondary to primary.
+
+When the original primary is recovered, it is too late.
+
+It's no longer the primary.
+
+The additional writes that weren't replicated are discarded because the state of the instance is not in sync with the current primary node.
+
+### The state in managed outside Kubernetes (when possible)
+
+Since pods are mortal, the likelihood of failover events is higher than traditionally hosted or fully managed solutions.
+
+Also, Kubernetes isn't application-aware.
+
+If your app requires specific steps to sync or keep state, you won't be able to run it with a Deployment or StatefulSets.
+
+Examples include:
+
+- failover and leader election
+- sharding and rebalancing
+
+Instead of managing your message brokers, databases or block storage, you should consider using external services provided by your cloud provider or externally to Kubernetes.
+
+In particular, you should consider using:
+
+- the [Service Catalog](https://kubernetes.io/docs/concepts/extend-kubernetes/service-catalog/), if you're cluster is deployed in the cloud or has access to a Service that exposes the Open Service Broker API.
+- the [AWS Service Operator](https://github.com/aws/aws-service-operator-k8s), if your cluster is deployed in Amazon Web Services
+
+### There are no StatefulSets, but Operators
+
+You shouldn't deploy stateful apps with StatefulSets directly.
+
+Instead, you should rely on Operators which might use StatefulSets to manage those apps.
+
+[The Elastic Search operator is an excellent example of a custom controller managing StatefulSets.](https://github.com/elastic/cloud-on-k8s/issues/1173)
+
+Operators are applications aware and cater for specific use cases for your apps such as:
+
+- backup and restoring
+- sharding and rebalancing
+
+Without an operator, none of the above can be possible, and you might risk losing data.
+
+### You are using `local` instead of `hostPath` volumes
+
+You can use the `hostPath` volume to access a file or directory in the Node's filesystem.
+
+And you can do so with `local` volumes too.
+
+_Which one should you use?_
+
+The `hostPath` volume is useful for:
+
+- scraping logs from Docker (e.g `/var/lib/docker`)
+- accessing specific kernel settings in the kernel through the `/sys` folder
+
+In other words, it's useful for consuming resources that are exposed to all Nodes.
+
+It is, in fact, usually used by DaemonSets.
+
+The `local` volume is designed to expose the Node's filesystem as a storage mechanism.
+
+The scheduler is aware of the `local` volumes, so it will schedule Pods only where there's one (the same doesn't happen for `hostPath`).
+
+If you're deploying stateful apps, you should probably use `local` volumes.
+
+You can find more details about the [`local` volumes in this repository](https://github.com/kubernetes-sigs/sig-storage-local-static-provisioner).
+
+[The best resource to learn about the `hostPath` volume](https://kubernetes.io/docs/concepts/storage/volumes/#hostpath) is still the official documentation.
+
+### Use StorageClasses with the WaitForFirstConsumer binding mode
+
+A StorageClass is a recipe to create a Persistent Volume in Kubernetes.
+
+When there's a request for storage with a particular StorageClass, the recipe is inspected, and the storage provider creates the volume accordingly.
+
+You should use the StorageClass in your Persistent Volume Claims as StorageClasses are portable across clusters and clouds.
+
+When it comes to StorageClasses, you should pay attention to the binding mode.
+
+While the default binding mode is _Immediate_, [you should probably change that to _WaitForFirstConsumer_](https://docs.couchbase.com/operator/current/persistent-volumes-zoning-guide.html).
+
+### Use volumes that are provisioned through the Container Storage Interface (CSI)
+
+Kubernetes has in-tree and external storage providers.
+
+In-tree providers include `hostPath`, `local` volumes as well as vendor-specific providers such as StorageOS and the AWS Elastic Block Store.
+
+Those providers are hard-coded into Kubernetes.
+
+External providers, instead, are more like plugins.
+
+You can install them independently from the current version of Kubernetes.
+
+_What happens if there's a bug in the provider?_
+
+_And if you need a feature that is only available in the latest code update?_
+
+Good luck answering those questions if you rely on in-tree providers.
+
+You will need to wait for the next Kubernetes release.
+
+External providers, instead, can be upgraded independently.
+
+### Define a `default` StorageClass
+
+When you create a PersistentVolumeClaim, you can select a StorageClass.
+
+If you don't, the _default_ StorageClass is automatically selected.
+
+You should always have:
+
+- a StroageClass named `default` defined in your cluster and
+- the DefaultStorageClass admission controller enabled
+
+The admission controller adds the _defalt_ StorageClass if the PersistentVolumeClaim doesn't have one.
+
+You can continue reading about the [default behaviour in StorageClasses on the official documentation](https://kubernetes.io/docs/concepts/storage/dynamic-provisioning/#defaulting-behavior).
+
+### Stateful workloads are scheduled on dedicated Nodes
+
+Pods share resources such as CPU and memory with other Pods on the same Node.
+
+If a Pods is using more resources than requested (but still less than the limits), it might end up committing for resources.
+
+The challenge is more problematic when Pods compete for disk I/O, particularly in Pods that uses storage.
+
+You can minimise the issue by scheduling Pods for stateful workloads on dedicated Nodes that are optimised for I/O and don't have noisy neighbours.
+
+You should also keep Pods attached to particular nodes with [Node affinity](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#node-affinity), [Node selectors](https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#nodeselector) or [taints and tolerations](https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/).
+
+If a stateful workload is moved to a different Node, [you don't want to move the data with it](https://twitter.com/kelseyhightower/status/963418681148502016?lang=en) — particularly if you have terabytes of data.
