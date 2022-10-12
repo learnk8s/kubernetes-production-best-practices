@@ -10,8 +10,6 @@ You shouldn't allow your user to use more resources than what you agreed in adva
 
 Cluster administrators can set constraints to limit the number of objects or amount of computing resources that are used in your project with quotas and limit ranges.
 
-You should check out the official documentation if you need a refresher on [limit ranges](https://kubernetes.io/docs/concepts/policy/limit-range/)
-
 ### Namespaces have LimitRange
 
 Containers without limits can lead to resource contention with other containers and unoptimized consumption of computing resources.
@@ -22,7 +20,7 @@ With the LimitRange object, you can define default values for resource requests 
 
 Any container created inside that namespace, without request and limit values explicitly specified, is assigned the default values.
 
-You should check out the official documentation if you need a refresher on [resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/).
+You should check out the official documentation if you need a refresher on [limit ranges](https://kubernetes.io/docs/concepts/policy/limit-range/).
 
 ### Namespaces have ResourceQuotas
 
@@ -32,7 +30,9 @@ Defining a resource quota for a namespace limits the total amount of CPU, memory
 
 You can also set quotas for other Kubernetes objects such as the number of Pods in the current namespace.
 
-If you're thinking that someone could exploit your cluster and create 20000 ConfigMaps, using the LimitRange is how you can prevent that.
+If you're thinking that someone could exploit your cluster and create 20000 ConfigMaps, using the ResourceQuota is how you can prevent that.
+
+You should check out the official documentation if you need a refresher on [resource quotas](https://kubernetes.io/docs/concepts/policy/resource-quotas/).
 
 ## Pod security policies
 
@@ -55,7 +55,7 @@ For example, you can use Kubernetes Pod security policies for restricting:
 
 Choosing the right policy depends on the nature of your cluster.
 
-The following article explains some of the [Kubernetes Pod Security Policy best practices](https://resources.whitesourcesoftware.com/blog-whitesource/kubernetes-pod-security-policy)
+The following article explains some of the [Kubernetes Pod Security Policy best practices](https://resources.whitesourcesoftware.com/blog-whitesource/kubernetes-pod-security-policy).
 
 ### Disable privileged containers
 
@@ -179,7 +179,7 @@ First, they describe their requirements:
 - Users should be able to deploy, but they shouldn't be allowed to read Secrets for example
 - Admins should get full access to all resources
 - Applications should not gain write access to the Kubernetes API by default
-- It should be possible to write to the Kubernetes API for some uses.
+- It should be possible to write to the Kubernetes API for some uses
 
 The four requirements translate into five separate Roles:
 
