@@ -1,11 +1,17 @@
-# Kubernetes production best-practices
+# Kubernetes production readiness checklist
 
-This checklist provides actionable best practices for deploying secure, scalable, and resilient services on Kubernetes.
+![Kubernetes production best practices](preview.png)
 
-![Kubernetes production best practices](preview.gif)
+This is a free, open checklist to help you deploy your applications to Kubernetes.
+
+No form, email, or download is required. Use it in the browser, share it with your team, or adapt it for your own internal review.
+
+![](./prod-best-practices.gif)
 
 **Topics**
 
-- [Application development](application-development.md)
-- [Governance](governance.md)
-- [Cluster configuration](configuration.md)
+- [Your application](01-your-application.md)
+- [Your Kubernetes manifests](02-your-manifests.md)
+- [Your security](03-your-security.md)
+- [Scaling](04-scaling.md)
+- [Going live](05-going-live.md)
